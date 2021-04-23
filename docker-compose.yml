@@ -1,0 +1,40 @@
+version: "3"
+services:
+  db:
+    image: postgres:12.6
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: kidos
+      POSTGRES_USER: test
+      POSTGRES_DB: test
+    volumes:
+      - myvol:/var/lib/postgresql/data
+    networks:
+      - my-net2
+
+  server:
+    image: nginx:0.2
+    ports:
+      - "8080:80"
+    volumes:
+      - /Users/smaelmouheb/Mentorat/dock_app:/var/www/dock_app/
+    networks:
+      - my-net2
+    depends_on:
+      - web
+      - db
+
+  web:
+    image: php:0.2
+    ports:
+      - "9000:9000"
+    volumes:
+      - /Users/smaelmouheb/Mentorat/dock_app:/var/www/dock_app/
+    networks:
+      - my-net2
+    working_dir: /var/www/dock_app
+
+networks:
+  my-net2:
+volumes:
+  myvol:
