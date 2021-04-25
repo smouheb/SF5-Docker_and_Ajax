@@ -15,6 +15,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //jquery for ajax
 var $ = require('jquery');
 $(function(){
+  //return and append to the dom json response
   var ul = $(".resp");
   $('button').on('click', function(){
     var name = $('#name').val();
@@ -28,10 +29,37 @@ $(function(){
       type: 'POST',
       data: data,
       success: function(data){
-        $.each(data, function(i, item){
+        $.each(data, function(i,item){
           ul.append('<li>'+item+'</li>');
         })
       },
     });
   });
+  // piece of code to return via ajax data from the database
+  var tr = $('table');
+  $('#search').on('keyup', function(){
+    $('.new').remove();
+    let data = {
+      "name": $('#search').val(),
+    };
+    let table = $('.table');
+    $.ajax({
+      url: 'http://localhost:8080/ajSearch',
+      type: 'POST',
+      data: data,
+      success: function(response){
+        let resp = JSON.parse(response);
+        $.each(resp, function(i, item){
+          table.append(
+             '<tr class="new">'+
+                 '<td>'+item['id']+'</td>'
+                +'<td>'+item['name']+'</td>'
+                +'<td>'+item['lastname']+'</td>'
+             +'</tr>'
+           );
+        });
+      },
+    });
+  })
+
 });

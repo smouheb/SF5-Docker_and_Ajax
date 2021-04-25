@@ -19,6 +19,19 @@ class AjexampleRepository extends ServiceEntityRepository
         parent::__construct($registry, Ajexample::class);
     }
 
+    public function findAjaxSearch($name)
+    {
+      $entityManager = $this->getEntityManager();
+      $sql="SELECT *
+            FROM ajexample
+            WHERE name like '%".$name."%'";
+      $statement = $entityManager->getConnection()
+                                 ->prepare($sql);
+      $statement->execute();
+      $json = json_encode($statement->fetchAll());
+
+      return $json;
+    }
     // /**
     //  * @return Ajexample[] Returns an array of Ajexample objects
     //  */

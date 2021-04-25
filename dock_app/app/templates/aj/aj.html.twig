@@ -5,6 +5,21 @@
 {% block body %}
 <body>
 <br>
+<h3>Search via Ajax</h3>
+<form class="search" action="{{path('ajSearch')}}" method="post">
+  <input type="search" name="search" value="" id="search">
+  <button type="button" name="button" class="btn btn-success" id="bsearch">search</button>
+</form>
+<table class="table">
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+    <th>Last Name</th>
+  </tr>
+</table>
+<br>
+<br>
+<h3>Test for Ajax return response in Json</h3>
 <form class="" action="{{path('aj')}}" method="post">
     <div class="form-group">
       <div class="name">
